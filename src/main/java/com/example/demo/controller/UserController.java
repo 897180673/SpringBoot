@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Util.RedisUtil;
 import com.example.demo.domain.User;
 import com.example.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private RedisUtil redisUtil;
 
     @GetMapping("/test")
     public String test(){
+        redisUtil.set("你好","hello你好");
         String result=userService.sayHello();
         return result;
     }

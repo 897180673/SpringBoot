@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -38,5 +40,20 @@ public class UserController {
         }
         return  user;
     }
+
+
+    private List<User> userlist=new ArrayList<>();
+
+    @GetMapping("/heapOver")
+    public void heapOverTest(){
+
+
+        while(true){
+            userlist.add(new User());
+        }
+
+    }
+
+
 
 }

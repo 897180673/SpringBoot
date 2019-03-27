@@ -44,15 +44,27 @@ public class UserController {
 
     private List<User> userlist=new ArrayList<>();
 
+    //堆区内存溢出
     @GetMapping("/heapOver")
     public void heapOverTest(){
-
-
         while(true){
             userlist.add(new User());
         }
+    }
+
+
+    //cpu飙高测试
+    @GetMapping("letCpuBusy")
+    public void letCpuBusy(){
+        int i=0;
+        while(true){
+            i++;
+        }
 
     }
+
+
+
 
 
 

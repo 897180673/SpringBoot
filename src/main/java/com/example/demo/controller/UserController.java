@@ -57,7 +57,7 @@ public class UserController {
     @GetMapping("letCpuBusy")
     public void letCpuBusy(){
         int i=0;
-        while(true){
+        while(true) {
             i++;
         }
 

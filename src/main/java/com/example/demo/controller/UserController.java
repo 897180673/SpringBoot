@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.Util.RedisUtil;
 import com.example.demo.domain.User;
+import com.example.demo.mq.RabbitProducter;
 import com.example.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,10 @@ public class UserController {
     private UserService userService;
     @Resource
     private RedisUtil redisUtil;
+
+    @Resource
+    RabbitProducter rabbitProducter;
+
 
     @GetMapping("/test")
     public String test(){
@@ -65,6 +70,11 @@ public class UserController {
 
 
 
+    @GetMapping("/testMq")
+    public void testMq(String message){
+
+        rabbitProducter.sendMessage(message);
+    }
 
 
 

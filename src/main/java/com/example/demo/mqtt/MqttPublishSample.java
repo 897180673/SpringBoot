@@ -1,9 +1,6 @@
 package com.example.demo.mqtt;
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttPublishSample {
@@ -23,6 +20,7 @@ public class MqttPublishSample {
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setUserName("user");
             connOpts.setPassword("1234567".toCharArray());
+            connOpts.setKeepAliveInterval(60);
             connOpts.setCleanSession(true);
 
             System.out.println("Connecting to broker: "+broker);
@@ -33,9 +31,30 @@ public class MqttPublishSample {
             message.setQos(qos);
             sampleClient.publish(topic, message);
             System.out.println("Message published");
-            sampleClient.disconnect();
+
+            sampleClient.subscribe("123");
+            sampleClient.setCallback(new MqttCallback() {
+                @Override
+                public void connectionLost(Throwable throwable) {
+
+                }
+
+                @Override
+                public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+                    System.out.println("topic:"+s+","+"message:"+mqttMessage.toString());
+
+                }
+
+                @Override
+                public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
+                }
+            });
+
+
+//            sampleClient.disconnect();
             System.out.println("Disconnected");
-            System.exit(0);
+//            System.exit(0);
         } catch(MqttException me) {
             System.out.println("reason "+me.getReasonCode());
             System.out.println("msg "+me.getMessage());
